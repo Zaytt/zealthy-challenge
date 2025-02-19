@@ -23,8 +23,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params
     const body = await req.json()
 
     if (body.birthdate) {
@@ -35,7 +36,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     }
 
     const user = await prisma.user.update({
-      where: { id: params.id },
+      where: { id },
       data: body,
       select: {
         aboutMe: true,

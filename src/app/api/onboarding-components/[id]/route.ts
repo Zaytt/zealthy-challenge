@@ -3,11 +3,12 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const body = await req.json()
+    const { id } = await params
     const component = await prisma.onboardingComponent.update({
-      where: { id: params.id },
+      where: { id },
       data: body,
     })
     return NextResponse.json(component)
