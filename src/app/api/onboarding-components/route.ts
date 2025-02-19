@@ -9,7 +9,8 @@ export async function GET() {
       orderBy: { order: 'asc' },
     })
     return NextResponse.json(components)
-  } catch {
+  } catch (error) {
+    console.log(error)
     return NextResponse.json({ error: 'Error fetching components' }, { status: 500 })
   }
 }
