@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { OnboardingComponent } from '@/types/OnboardingComponent.type'
 import OnboardingPage from './OnboardingPage'
 import { usePageStore } from '@/store/PageStore'
@@ -14,7 +14,7 @@ export default function OnboardingPageWrapper() {
   const [showWelcomeBack, setShowWelcomeBack] = useState(false)
   const [returningUser, setReturningUser] = useState('')
 
-  const fetchComponents = async () => {
+  const fetchComponents = useCallback(async () => {
     try {
       setIsLoading(true)
       const response = await fetch('/api/onboarding-components')
@@ -43,9 +43,9 @@ export default function OnboardingPageWrapper() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [setIsLoading, setComponents, setError, setLastPage])
 
-  const initializeOnboarding = async () => {
+  const initializeOnboarding = useCallback(async () => {
     try {
       setIsLoading(true)
       const { page, email } = await fetchStoredUserData()
@@ -54,7 +54,7 @@ export default function OnboardingPageWrapper() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [setIsLoading, setCurrentPage, setReturningUser])
 
   useEffect(() => {
     if (localStorage.getItem(ONBOARDING_STATUS_KEY)) {
@@ -66,7 +66,7 @@ export default function OnboardingPageWrapper() {
     } else {
       fetchComponents()
     }
-  }, [])
+  }, [fetchComponents, initializeOnboarding])
 
   // Get components f or the current page
   const currentPageComponents = components.filter(component => component.pageNumber === currentPage)

@@ -9,7 +9,7 @@ export async function GET() {
       orderBy: { order: 'asc' },
     })
     return NextResponse.json(components)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error fetching components' }, { status: 500 })
   }
 }
@@ -17,21 +17,12 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    console.log('Request body:', body)
-
     const component = await prisma.onboardingComponent.create({
       data: body,
     })
-    return NextResponse.json(component, { status: 201 })
-  } catch (error) {
-    // Log the full error
-    if (error instanceof Error) {
-      console.log('Error: ', error.stack)
-    }
-
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-    return NextResponse.json({ error: 'Unknown error occurred' }, { status: 500 })
+    return NextResponse.json(component)
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred'
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

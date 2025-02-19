@@ -1,6 +1,6 @@
 'use client'
 import { useOnboardingComponentsStore } from '@/store/OnboardingComponentsStore'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import AdminPage from './AdminPage'
 import { OnboardingComponent } from '@/types/OnboardingComponent.type'
 
@@ -11,7 +11,7 @@ const AdminPageWrapper = () => {
   const [showWarning, setShowWarning] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
 
-  const fetchComponents = async () => {
+  const fetchComponents = useCallback(async () => {
     try {
       setIsLoading(true)
       const response = await fetch('/api/onboarding-components')
@@ -33,7 +33,7 @@ const AdminPageWrapper = () => {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [setIsLoading, setComponents, setError])
 
   const handlePageChange = (componentId: string, newPage: number) => {
     const proposedComponents = components.map(component =>
@@ -54,7 +54,7 @@ const AdminPageWrapper = () => {
 
   useEffect(() => {
     fetchComponents()
-  }, [])
+  }, [fetchComponents])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

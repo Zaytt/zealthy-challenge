@@ -16,17 +16,16 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         ...userData,
-        progress: 2  // Email/password completed
-      }
+        progress: 2, // Email/password completed
+      },
     })
 
+    // eslint-disable-next-line
     const { password: _, ...userWithoutPassword } = user
     return NextResponse.json(userWithoutPassword, { status: 201 })
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Error creating user' },
-      { status: 500 }
-    )
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Error creating user'
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
 
@@ -43,14 +42,12 @@ export async function GET() {
         zip: true,
         birthdate: true,
         progress: true,
-        createdAt: true
-      }
+        createdAt: true,
+      },
     })
     return NextResponse.json(users)
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Error fetching users' },
-      { status: 500 }
-    )
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Error fetching users'
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
-} 
+}
