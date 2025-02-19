@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  aboutMe   String?
+  street    String?
+  city      String?
+  state     String?
+  zip       String?
+  birthdate DateTime?
+  createdAt DateTime  @default(now())
+  progress  Int       @default(0)  // Progress tracking:
+                                  // 0  = not started
+                                  // 1  = not used
+                                  // 2  = on page 2 (email/password completed)
+                                  // 3  = page 2 completed
+                                  // -1 = process complete
+}
+
+model OnboardingComponent {
+  id            String     @id @default(uuid())
+  pageNumber    Int
+  componentType String     // Type of form component: "datepicker", "textfield", "textarea"
+  name          String
+  label         String
+  isActive      Boolean    @default(true)
+  order         Int        @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
