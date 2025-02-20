@@ -17,14 +17,9 @@ This project implements a "Custom Onboarding Flow" where admins can configure wh
 
    - Interface for managing component placement
    - Ability to assign components to different pages
-   - Components include:
-     - About Me (textarea)
-     - Address fields (street, city, state, zip)
-     - Birthdate selector
 
 3. **Data Visualization** (`/data`)
    - Display of all user submissions
-   - Real-time updates as users complete onboarding
 
 ## Tech Stack
 
