@@ -1,3 +1,56 @@
+# Zealthy Coding Challenge - Custom Onboarding Flow
+
+A technical assessment that implements a configurable user onboarding system with admin controls and data visualization.
+
+## Challenge Overview
+
+This project implements a "Custom Onboarding Flow" where admins can configure which form components appear on different pages of the user onboarding process. The application consists of three main sections:
+
+1. **User Onboarding Flow** (`/`)
+
+   - Multi-step wizard interface
+   - Email/password collection on first page
+   - Configurable components on pages 2 and 3
+   - Progress persistence for returning users
+
+2. **Admin Configuration** (`/admin`)
+
+   - Interface for managing component placement
+   - Ability to assign components to different pages
+   - Components include:
+     - About Me (textarea)
+     - Address fields (street, city, state, zip)
+     - Birthdate selector
+
+3. **Data Visualization** (`/data`)
+   - Display of all user submissions
+   - Real-time updates as users complete onboarding
+
+## Tech Stack
+
+- **Frontend**: Next.js 15, React 19
+- **Styling**: TailwindCSS
+- **Database**: PostgreSQL (via Supabase)
+- **ORM**: Prisma
+- **State Management**: Zustand
+
+## Live Demo
+
+[[Live Demo URL](https://zealthy-challenge-one.vercel.app)]
+
+## Local Development
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up your environment variables:
+
+````env
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -12,7 +65,7 @@ yarn dev
 pnpm dev
 # or
 bun dev
-```
+````
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
